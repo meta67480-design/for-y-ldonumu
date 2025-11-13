@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>1. Yıl Dönümümüz - Ahmet & Sinem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --pink: #e91e63;
+      --light: #fad0c4;
+      --soft: #fff0f5;
+      --gold: #ffd700;
+      --ink: #333;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px;
+      overflow-y: auto;
+      color: #444;
+      -webkit-overflow-scrolling: touch;
+    }
+    .page {
+      display: none;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      margin: 20px auto;
+    }
+    .page.active {
+      display: block;
+      animation: fade 0.8s ease-in;
+    }
+    @keyframes fade {
+      from {opacity:0; transform:translateY(20px);}
+      to {opacity:1; transform:none;}
+    }
+    .card {
+      background: white;
+      padding: 40px 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      animation: float 6s infinite ease-in-out;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      margin-bottom: 30px;
+    }
+    @keyframes float {
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-10px);}
+    }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.6rem;
+      color: var(--pink);
+      margin-bottom: 15px;
+      position: relative;
+    }
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 15px 0;
+      color: #555;
+    }
+    .highlight {
+      background: linear-gradient(120deg, #ffd70033 0%, #ffd70033 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 40%;
+      background-position: 0 85%;
+      padding: 0 3px;
+      font-weight: 500;
+      color: #c2185b;
+    }
+    button {
+      margin-top: 25px;
+      padding: 14px 35px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.6s;
+    }
+    button:hover::before {
+      left: 100%;
+    }
+    .next-btn {
+      background: var(--pink);
+      color: white;
+    }
+    .next-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(233,30,99,0.3);
+    }
+    .contract {
+      background: #fdf6f0;
+      background-image:
+        radial-gradient(circle at 10px 10px, #f8e6d9 1px, transparent 1px),
+        radial-gradient(circle at 30px 30px, #f8e6d9 1px, transparent 1px);
+      background-size: 40px 40px;
+      padding: 28px;
+      border-radius: 18px;
+      margin: 28px 0;
+      border: 2px solid #f8d7da;
+      font-size: 0.96rem;
+      line-height: 2;
+      text-align: left;
+      max-height: 55vh;
+      overflow-y: auto;
+      padding-right: 15px;
+      position: relative;
+      box-shadow: inset 0 0 15px rgba(248, 215, 218, 0.3);
+    }
+    .contract::before {
+      content: 'Sevgililik Sözleşmesi';
+      position: absolute;
+      top: -12px;
+      left: 22px;
+      background: white;
+      padding: 0 12px;
+      font-size: 0.82rem;
+      color: var(--pink);
+      font-weight: 600;
+      border: 1px solid #f8d7da;
+      border-radius: 8px;
+    }
+    .contract::-webkit-scrollbar {
+      width: 8px;
+    }
+    .contract::-webkit-scrollbar-track {
+      background: #fdf6f0;
+      border-radius: 10px;
+    }
+    .contract::-webkit-scrollbar-thumb {
+      background: var(--pink);
+      border-radius: 10px;
+    }
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .yes {
+      background: #ff6b9d;
+      color: white;
+      position: relative;
+    }
+    .yes::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat center;
+      background-size: 16px;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: 0.3s;
+    }
+    .yes:hover::after {
+      opacity: 1;
+    }
+    .no {
+      background: #eee;
+      color: #999;
+      position: relative;
+    }
+    .no:hover {
+      transform: translateX(20px);
+    }
+
+    /* KALP PATLAMASI - DÜZELTME */
+    .hearts {
+      position: fixed;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0;
+      pointer-events: none;
+      top: 100vh;
+      left: 0;
+      animation: burst 1.4s forwards;
+    }
+    @keyframes burst {
+      0% {
+        transform: translateX(var(--x-offset, 0)) translateY(0) scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(var(--x-offset, 0)) translateY(-120vh) scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    .signature {
+      margin-top: 30px;
+      font-style: italic;
+      color: var(--pink);
+      font-size: 1.1rem;
+      text-align: right;
+      padding-right: 10px;
+    }
+    .signature::before {
+      content: '—';
+      margin-right: 8px;
+    }
+    .countdown {
+      font-size: 1.3rem;
+      color: var(--pink);
+      font-weight: 600;
+      margin: 20px 0;
+    }
+    .photo-frame {
+      width: 120px;
+      height: 120px;
+      margin: 20px auto;
+      border: 6px solid white;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      animation: pulse 2s infinite;
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .quote {
+      font-style: italic;
+      color: #c2185b;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 15px;
+      font-size: 0.95rem;
+    }
+    .parties {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 35px 0 25px;
+      padding: 20px 0;
+      border-top: 1px dashed var(--pink);
+      border-bottom: 1px dashed var(--pink);
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .party {
+      text-align: center;
+      flex: 1;
+    }
+    .party-name {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--pink);
+      margin-bottom: 6px;
+    }
+    .stamp {
+      width: 58px;
+      height: 58px;
+      background: radial-gradient(circle, transparent 32%, var(--pink) 32%, var(--pink) 42%, transparent 42%);
+      border-radius: 50%;
+      position: relative;
+      margin: 10px auto 0;
+    }
+    .stamp::after {
+      content: 'ONAYLI';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      font-size: 0.58rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2rem; }
+      .card { padding: 30px 18px; border-radius: 18px; max-height: 90vh; margin-bottom: 25px; }
+      .contract { font-size: 0.92rem; line-height: 1.9; max-height: 48vh; padding: 22px 15px; }
+      button { padding: 12px 28px; font-size: 1rem; }
+      .photo-frame { width: 100px; height: 100px; }
+      .parties { margin: 28px 0 20px; padding: 15px 0; }
+      .party-name { font-size: 1.2rem; }
+      .stamp { width: 52px; height: 52px; }
+      .stamp::after { font-size: 0.52rem; }
+      .heart { font-size: 1.5rem; }
+    }
+    @media (max-width: 375px) and (max-height: 812px) {
+      .card { padding: 28px 16px; }
+      h1 { font-size: 2.1rem; }
+      .contract { font-size: 0.9rem; line-height: 1.85; max-height: 46vh; }
+      .parties { margin: 22px 0 15px; padding: 12px 0; }
+      .party-name { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <!-- SAYFA 1 -->
+  <div id="page1" class="page active">
+    <div class="card">
+      <h1>Sevgilim Sinem</h1>
+      <div class="photo-frame">
+        <img src="https://via.placeholder.com/120/FFB6C1/FFFFFF?text=Ahmet+%26+Sinem" alt="Biz">
+      </div>
+      <p><strong>Tam <span class="highlight">1 yıl</span></strong> oldu seninle.</p>
+      <p>Her an, her gülüş, her “seni seviyorum”…<br>Hayatımın <span class="highlight">en güzel yılı</span>.</p>
+      <div class="countdown" id="countdown">Yükleniyor...</div>
+      <p><strong>+1 yıl</strong> sözleşme uzatmak ister misin?</p>
+      <button class="next-btn" onclick="goTo(2)">DEVAM ET</button>
+    </div>
+  </div>
+
+  <!-- SAYFA 2 -->
+  <div id="page2" class="page">
+    <div class="card">
+      <div class="contract">
+        <strong>Süre:</strong> +1 Yıl (Otomatik yenilenebilir)<br><br>
+        <strong>Maddeler:</strong><br><br>
+        1. Birbirimize karşı olan saygı hiçbir zaman kaybedilmeyecek. (Sadece ikimizin olduğu yer ve zamanlarda ölümüne makara yapılabilir.)<br><br>
+        2. İnsanlar içerisinde birbirimizi terslemek yok.<br><br>
+        3. İkimiz arasındaki sıkıntı ikimiz arasında halledilecek. Şahıslar, sosyal mecra vb. hiçbir şekilde dâhil edilmeyecek.<br><br>
+        4. İki tarafta karşısındakine hayatındaki en önemli şey karşısındaymış gibi hissettirecek.<br><br>
+        5. İki tarafta birbirinden şüphe ettirecek hareketlerden uzak duracak.<br><br>
+        6. İşin sonu neye varırsa varsın yapılan hareketin doğrusu söylenecek.<br><br>
+        7. Başka bir şeye sinirlenme veya kızma durumunda öfkemizi karşı taraftan çıkartmayacağız.<br><br>
+        8. Hissedilenler dobra şekilde söylenilecek. Ne düşünürsek söylenilecek. (Tabii ki karşı tarafı üzmeden ve kırmadan.)<br><br>
+        9. Koşullar neyi gerektirirse gerektirsin iki tarafta birbirine sırt çevirmeyecek.<br><br>
+        10. Sürekli sevgili gibi değil, yeri geldiği zaman arkadaş, ana, baba gibi davranılacak.<br><br>
+        11. Her iki tarafta haksız olduğu konularda alttan almayı bilecek.<br><br>
+      </div>
+
+      <div class="parties">
+        <div class="party">
+          <div class="party-name" id="name1">Ahmet</div>
+          <div class="stamp"></div>
+        </div>
+        <div style="font-size:1.6rem; color:var(--pink);">❤️</div>
+        <div class="party">
+          <div class="party-name" id="name2">Sinem</div>
+          <div class="stamp"></div>
+        </div>
+      </div>
+
+      <div class="quote">
+        "Seninle geçirdiğim her an, hayatımın en güzel anıdır."
+      </div>
+
+      <div class="buttons">
+        <button class="yes" onclick="accept()">EVET!</button>
+        <button class="no" onclick="reject()">Hayır…</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYFA 3 -->
+  <div id="page3" class="page">
+    <div class="card" id="result">
+      <!-- Sonuç buraya gelecek -->
+    </div>
+  </div>
+
+  <script>
+    // SAYAÇ: 20 ARALIK 2024'TEN İTİBAREN
+    function updateCountdown() {
+      const startDate = new Date('2024-12-20T00:00:00+03:00');
+      const now = new Date();
+      const diff = now - startDate;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('countdown').innerHTML =
+        `${days} gün, ${hours} saat, ${minutes} dk, ${seconds} sn`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Sayfa geçişi
+    function goTo(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + n).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Evet → Kutlama
+    function accept() {
+      goTo(3);
+      const name1 = document.getElementById('name1').textContent;
+      const name2 = document.getElementById('name2').textContent;
+      document.getElementById('result').innerHTML = `
+        <h1>TEBRİKLER!</h1>
+        <div class="photo-frame">
+          <img src="https://via.placeholder.com/120/FF69B4/FFFFFF?text=2.YIL" alt="2. Yıl">
+        </div>
+        <p><strong>${name2}</strong>, sözleşme <strong>+1 yıl</strong> uzatıldı!</p>
+        <p>Artık <strong>2. yılımıza</strong> doğru yürüyoruz…</p>
+        <p style="margin:25px 0; font-style:italic; color:#d81b60;">
+          "${name2}, seni ömür boyu sevmeye devam edeceğim. Bu sadece başlangıç."
+        </p>
+        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG9vZXh1eW9zN2V2a2N0eXJ4cG5pZ2J1a2FzN2F0a3F1b2Z3b3F5eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEjI6SIIHBdRxXI40/giphy.gif"
+             alt="Mutlu çift" loading="lazy"
+             style="border-radius:15px; max-width:100%; margin:20px 0; display:block;">
+        <div class="signature">
+          Seni çok seviyorum…<br>
+          <span style="font-size:0.9rem; color:#777;">— ${name1}</span>
+        </div>
+      `;
+
+      // 40 kalp patlaması
+      for(let i = 0; i < 40; i++) {
+        setTimeout(createHeart, i * 60);
+      }
+
+      // Kalp atışı sesi (isteğe bağlı)
+      const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-heart-beat-747.mp3');
+      audio.play().catch(() => {});
+    }
+
+    // Hayır → Kaçan buton
+    let rejectCount = 0;
+    function reject() {
+      rejectCount++;
+      const btn = document.querySelector('.no');
+      const x = (Math.random() > 0.5 ? 1 : -1) * (50 + Math.random() * 100);
+      const y = (Math.random() > 0.5 ? 1 : -1) * (30 + Math.random() * 70);
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+      btn.style.transition = 'transform 0.5s ease';
+      setTimeout(() => btn.style.transform = '', 600);
+
+      if (rejectCount >= 3) {
+        btn.innerHTML = 'Tamam, pes ettim ❤️';
+        btn.disabled = true;
+        btn.style.background = '#ff6b9d';
+        btn.style.color = 'white';
+        setTimeout(accept, 1500);
+      }
+    }
+
+    // KALP PATLAMASI - DÜZELTME
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      const emojis = ['❤️', '💖', '💘', '💝', '💕', '🩷', '💗', '💓', '✨'];
+      heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+
+      const xOffset = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 100;
+      heart.style.setProperty('--x-offset', xOffset + 'px');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = '100vh';
+      heart.style.animationDuration = (0.9 + Math.random() * 0.6) + 's';
+
+      document.getElementById('hearts').appendChild(heart);
+
+      setTimeout(() => {
+        if (heart.parentNode) heart.remove();
+      }, 1400);
+    }
+
+    // İsimler
+    window.onload = () => {
+      document.getElementById('name1').textContent = "Ahmet ";
+      document.getElementById('name2').textContent = "Sinem ";
+    };
+  </script>
+</body>
